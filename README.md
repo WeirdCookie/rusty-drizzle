@@ -1,9 +1,15 @@
 # rusty-drizzle
 
-Ein einfaches Rust-Projekt, das für GitHub vorbereitet ist.
+A basic 2D plain generator using rust
 
-## Ausführen
+## requirements
+
+- newest version of rust from https://rust-lang.org/tools/install/
+- git from https://git-scm.com/install/
+## How to use
 
 ```bash
+git clone https://github.com/WeirdCookie/rusty-drizzle.git
 cargo run
+
 ```
