@@ -34,7 +34,10 @@ If you want to build the newest code from source:
 2. ```bash
     git clone https://github.com/WeirdCookie/rusty-drizzle.git && cd rusty-drizzle && cargo build --release ```
 
-3. ```bash
+
+
+3. open it with 
+ ```bash
     ./target/release/rusty-drizzle --help ```
 
 ## Examples
