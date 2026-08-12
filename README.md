@@ -36,8 +36,7 @@ If you want to build the newest code from source:
 
 
 
-3. open it with 
- ```bash
+3. ```bash
     ./target/release/rusty-drizzle --help ```
 
 ## Examples
