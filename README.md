@@ -4,8 +4,12 @@ A basic 2D plain generator using rust
 
 ## requirements
 
+(you only need those for building from source)
+
 - newest version of rust from https://rust-lang.org/tools/install/
 - git from https://git-scm.com/install/
+- curl
+
 ## How to use
 
 
@@ -23,6 +27,15 @@ To start the programm:
 ./rusty-drizzle
 ```
 
+If you want to build the newest code from source:
+
+1. make sure you have all [requirements](#requirements) installed
+
+2. ```bash
+    git clone https://github.com/WeirdCookie/rusty-drizzle.git && cd rusty-drizzle && cargo build --release ```
+
+3. open it with ```bash ./target/release/rusty-drizzle --help
+    ```
 
 ## Examples
 
