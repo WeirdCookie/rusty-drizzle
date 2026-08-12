@@ -15,6 +15,7 @@ A basic 2D plain generator using rust
 
 If you are on windows go to releases and download the latest .exe
 
+
 If you are on GNU/Linux paste this command into your terminal emulator to download:
 
 ```bash
