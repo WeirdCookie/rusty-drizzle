@@ -33,12 +33,12 @@ If you want to build the newest code from source:
 1. make sure you have all [requirements](#requirements) installed
 
 2. ```bash
-    git clone https://github.com/WeirdCookie/rusty-drizzle.git && cd rusty-drizzle && cargo build --release ```
-
-
+    git clone https://github.com/WeirdCookie/rusty-drizzle.git && cd rusty-drizzle && cargo build --release
+    ```
 
 3. ```bash
-    ./target/release/rusty-drizzle --help ```
+    ./target/release/rusty-drizzle --help
+    ```
 
 ## Examples
 
