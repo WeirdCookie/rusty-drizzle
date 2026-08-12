@@ -13,3 +13,7 @@ git clone https://github.com/WeirdCookie/rusty-drizzle.git
 cargo run
 
 ```
+## Examples
+
+This could be an image of v0.1.0
+![Eyample image v1](random_pattern.png)
