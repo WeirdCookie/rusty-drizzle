@@ -8,11 +8,22 @@ A basic 2D plain generator using rust
 - git from https://git-scm.com/install/
 ## How to use
 
-```bash
-git clone https://github.com/WeirdCookie/rusty-drizzle.git
-cargo run
 
+If you are on windows go to releases and download the latest .exe
+
+If you are on GNU/Linux paste this command into your terminal emulator to download:
+
+```bash
+curl -L -o rusty-drizzle https://github.com/BENUTZERNAME/REPONAME/releases/latest/download/rusty-drizzle && chmod +x rusty-drizzle
 ```
+
+To start the programm:
+
+```bash
+./rusty-drizzle
+```
+
+
 ## Examples
 
 This could be an image of v0.1.0
