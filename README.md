@@ -19,7 +19,7 @@ If you are on windows go to releases and download the latest .exe
 If you are on GNU/Linux paste this command into your terminal emulator to download:
 
 ```bash
-curl -L -o rusty-drizzle https://github.com/WeirdCookie/rusty-drizzle/releases/latest/download/rusty-drizzle && chmod +x rusty-drizzle
+curl -L -o rusty-drizzle https://github.com/WeirdCookie/rusty-drizzle/releases/download/pre-release/rusty-drizzle && chmod +x rusty-drizzle
 ```
 
 To start the programm:
