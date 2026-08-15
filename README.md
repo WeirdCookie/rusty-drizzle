@@ -2,7 +2,7 @@
 
 A basic 2D plain generator using rust
 
-#### AI Disclusure
+#### AI Disclosure
 
 This project was mostly human written, but AI was also involved for the following things:
 
