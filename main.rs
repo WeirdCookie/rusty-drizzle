@@ -1,5 +1,6 @@
 use image::{ImageBuffer, Rgb};
 use rand::Rng;
+use wasm_bindgen::prelude::*;
 
 fn main() {
     let width = 400;
