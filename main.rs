@@ -1,3 +1,5 @@
+//this is the CLI part for saving images
+
 use image::{ImageBuffer, Rgb};
 use rand::Rng;
 use wasm_bindgen::prelude::*;
