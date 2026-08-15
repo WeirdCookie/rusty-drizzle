@@ -1,0 +1,15 @@
+{
+  "name": "rusty-drizzle",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "rusty_drizzle_bg.wasm",
+    "rusty_drizzle.js",
+    "rusty_drizzle.d.ts"
+  ],
+  "main": "rusty_drizzle.js",
+  "types": "rusty_drizzle.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
