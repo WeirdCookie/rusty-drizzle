@@ -24,7 +24,7 @@ you only need those for building from source
 
 ## How to use
 
-### If you want to to just test it on your webbrowser simply go on 
+#### If you want to to just test it on your webbrowser simply go on 
 https://rusty-drizzle.weirdcookie.workers.dev/
 
 
