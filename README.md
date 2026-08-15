@@ -16,7 +16,7 @@ The core logic and design decisions were reviewed and verified by the author
 
 ## requirements
 
-(you only need those for building from source)
+you only need those for building from source
 
 - newest version of rust from https://rust-lang.org/tools/install/
 - git from https://git-scm.com/install/
@@ -24,7 +24,7 @@ The core logic and design decisions were reviewed and verified by the author
 
 ## How to use
 
-###### If you want to to just test it on your webbrowser simply go on 
+### If you want to to just test it on your webbrowser simply go on 
 https://rusty-drizzle.weirdcookie.workers.dev/
 
 
