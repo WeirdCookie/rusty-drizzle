@@ -24,6 +24,8 @@ The core logic and design decisions were reviewed and verified by the author
 
 ## How to use
 
+If you want to to just test it on your webbrowser simply go on 
+https://rusty-drizzle.weirdcookie.workers.dev/
 
 If you are on windows go to releases and download the latest .exe
 
