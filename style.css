@@ -1,3 +1,24 @@
 h1 {
     text-align:center
 }
+
+button {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.6rem 1.4rem;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #fff;
+    background: #04133b;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0a245f;
+}
+
+button:active {
+    transform: scale(0.97);
+}
