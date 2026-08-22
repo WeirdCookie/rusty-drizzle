@@ -8,7 +8,15 @@ use std::fs::File;
 use std::io::{self, BufWriter, Write};
 use std::str::FromStr;
 
+// output file format
+#[derive(Clone, Copy, PartialEq)]
+enum Format {
+    Gif,
+    Png,
+}
+
 struct Params {
+    format: Format,
     pic_width: u32,
     pic_height: u32,
     size: f64,
@@ -21,6 +29,7 @@ struct Params {
 impl Default for Params {
     fn default() -> Self {
         Params {
+            format: Format::Gif,
             pic_width: 400,
             pic_height: 300,
             size: 12.0,
@@ -56,9 +65,27 @@ where
     }
 }
 
+// asks which output format to use; pressing Enter keeps the default (gif)
+fn read_format(prompt: &str) -> Result<Format, Box<dyn std::error::Error>> {
+    loop {
+        print!("{} (default gif): ", prompt);
+        io::stdout().flush()?;
+        let mut line = String::new();
+        io::stdin().read_line(&mut line)?;
+        let t = line.trim().to_ascii_lowercase();
+        match t.as_str() {
+            "" => return Ok(Format::Gif),
+            "gif" => return Ok(Format::Gif),
+            "png" => return Ok(Format::Png),
+            _ => println!("Invalid format. Use 'gif' or 'png'."),
+        }
+    }
+}
+
 // interactive mode: asks for every parameter and uses the answers
 fn user_input() -> Result<Params, Box<dyn std::error::Error>> {
     let mut p = Params::default();
+    p.format = read_format("Output format (gif or png)")?;
     p.pic_width = read_number("Picture width in px", p.pic_width)?;
     p.pic_height = read_number("Picture height in px", p.pic_height)?;
     p.size = read_number("Drop size in px", p.size)?;
@@ -82,6 +109,7 @@ fn print_help() {
     println!("  --help          show this help");
     println!();
     println!("Run with no arguments to set the parameters interactively.");
+    println!("  (interactive mode first asks whether to save a GIF or a PNG)");
     println!();
     println!("Example:");
     println!("  rusty-drizzle --size 20 --speed 500 --count 400 --angle 30 --width 3");
@@ -134,13 +162,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         p.angle_deg,
     );
 
-    let out = BufWriter::new(File::create("rain.gif")?);
-    let mut encoder = GifEncoder::new(out);
-    encoder.set_repeat(Repeat::Infinite)?;
-
-    let total_frames = fps * seconds;
-    for _ in 0..total_frames {
-        rain.step(1.0 / fps as f64, width as f64, height as f64);
+    // build a single rendered frame (advances the simulation one step)
+    fn render_frame(
+        rain: &mut sim::Rain,
+        width: u32,
+        height: u32,
+        stroke: f64,
+    ) -> RgbaImage {
+        rain.step(1.0 / 25.0, width as f64, height as f64);
 
         let mut img = RgbaImage::new(width, height);
         for px in img.pixels_mut() {
@@ -153,10 +182,30 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 d.y,
                 d.x - d.ex,
                 d.y - d.ey,
-                p.width,
+                stroke,
                 Rgba([160, 200, 255, 255]),
             );
         }
+        img
+    }
+
+    if p.format == Format::Png {
+        let img = render_frame(&mut rain, width, height, p.width);
+        img.save("rain.png")?;
+        println!(
+            "saved rain.png ({}x{}) — size={} speed={} count={} angle={} width={}",
+            width, height, p.size, p.speed, p.count, p.angle_deg, p.width
+        );
+        return Ok(());
+    }
+
+    let out = BufWriter::new(File::create("rain.gif")?);
+    let mut encoder = GifEncoder::new(out);
+    encoder.set_repeat(Repeat::Infinite)?;
+
+    let total_frames = fps * seconds;
+    for _ in 0..total_frames {
+        let img = render_frame(&mut rain, width, height, p.width);
 
         encoder.encode_frame(Frame::from_parts(
             img,
