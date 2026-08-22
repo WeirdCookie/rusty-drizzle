@@ -1,6 +1,6 @@
 # rusty-drizzle
 
-A basic 2D plain generator using rust
+A basic 2D rain generator using rust
 
 #### AI Disclosure
 
