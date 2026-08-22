@@ -1,13 +1,22 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export function draw_noise(ctx: CanvasRenderingContext2D, width: number, height: number): void;
+export class Rain {
+    free(): void;
+    [Symbol.dispose](): void;
+    draw(ctx: CanvasRenderingContext2D, w: number, h: number): void;
+    constructor(count: number);
+    step(dt: number, w: number, h: number): void;
+}
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
-    readonly draw_noise: (a: any, b: number, c: number) => void;
+    readonly __wbg_rain_free: (a: number, b: number) => void;
+    readonly rain_draw: (a: number, b: any, c: number, d: number) => void;
+    readonly rain_new: (a: number) => number;
+    readonly rain_step: (a: number, b: number, c: number, d: number) => void;
     readonly __wbindgen_exn_store: (a: number) => void;
     readonly __externref_table_alloc: () => number;
     readonly __wbindgen_externrefs: WebAssembly.Table;

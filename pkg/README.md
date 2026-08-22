@@ -2,15 +2,31 @@
 
 A basic 2D plain generator using rust
 
+#### AI Disclosure
+
+This project was mostly human written, but AI was also involved for the following things:
+
+- debugging compile errors (e.g., `image`/`getrandom` wasm issues)
+
+- initial project scaffolding (Cargo, wasm-pack setup)
+
+All final commits and decisions were made by a human.
+
+The core logic and design decisions were reviewed and verified by the author
+
 ## requirements
 
-(you only need those for building from source)
+you only need those for building from source
 
 - newest version of rust from https://rust-lang.org/tools/install/
 - git from https://git-scm.com/install/
 - curl
 
 ## How to use
+
+#### If you want to to just test it on your webbrowser simply go on 
+https://rusty-drizzle.weirdcookie.workers.dev/
+
 
 
 If you are on windows go to releases and download the latest .exe
@@ -46,3 +62,4 @@ This could be an image of v0.1.0
 
 
 ![Eyample image v1](random_pattern.png)
+

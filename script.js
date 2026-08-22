@@ -1,20 +1,25 @@
 
-import init, { draw_noise } from './pkg/rusty_drizzle.js';
+import init, { Rain } from './pkg/rusty_drizzle.js';
 
 
 const canvas = document.getElementById('noise-canvas');
 const ctx = canvas.getContext('2d');
+let rain;
 
 
-function drawNoise() {
-    draw_noise(ctx, canvas.width, canvas.height);
-    requestAnimationFrame(drawNoise);
+function frame(ts) {
+    const dt = (ts - (frame.last ?? ts)) / 1000;
+    rain.step(dt, canvas.width, canvas.height);
+    rain.draw(ctx, canvas.width, canvas.height);
+    frame.last = ts;
+    requestAnimationFrame(frame);
 }
 
 
 async function start() {
     await init();
-    drawNoise();
+    rain = new Rain(300);
+    requestAnimationFrame(frame);
 }
 
 

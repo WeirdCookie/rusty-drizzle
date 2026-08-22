@@ -1,13 +1,43 @@
 /* @ts-self-types="./rusty_drizzle.d.ts" */
 
-/**
- * @param {CanvasRenderingContext2D} ctx
- * @param {number} width
- * @param {number} height
- */
-export function draw_noise(ctx, width, height) {
-    wasm.draw_noise(ctx, width, height);
+export class Rain {
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+        RainFinalization.unregister(this);
+        return ptr;
+    }
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_rain_free(ptr, 0);
+    }
+    /**
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {number} w
+     * @param {number} h
+     */
+    draw(ctx, w, h) {
+        wasm.rain_draw(this.__wbg_ptr, ctx, w, h);
+    }
+    /**
+     * @param {number} count
+     */
+    constructor(count) {
+        const ret = wasm.rain_new(count);
+        this.__wbg_ptr = ret;
+        RainFinalization.register(this, this.__wbg_ptr, this);
+        return this;
+    }
+    /**
+     * @param {number} dt
+     * @param {number} w
+     * @param {number} h
+     */
+    step(dt, w, h) {
+        wasm.rain_step(this.__wbg_ptr, dt, w, h);
+    }
 }
+if (Symbol.dispose) Rain.prototype[Symbol.dispose] = Rain.prototype.free;
 function __wbg_get_imports() {
     const import0 = {
         __proto__: null,
@@ -31,6 +61,9 @@ function __wbg_get_imports() {
         __wbg___wbindgen_throw_bb96b2010945f0bc: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
         },
+        __wbg_beginPath_4b87fe7ed5408cac: function(arg0) {
+            arg0.beginPath();
+        },
         __wbg_call_35dba3c747ad7521: function() { return handleError(function (arg0, arg1, arg2) {
             const ret = arg0.call(arg1, arg2);
             return ret;
@@ -48,6 +81,12 @@ function __wbg_get_imports() {
         __wbg_length_36bd29c6848c2144: function(arg0) {
             const ret = arg0.length;
             return ret;
+        },
+        __wbg_lineTo_9495a068a4f48283: function(arg0, arg1, arg2) {
+            arg0.lineTo(arg1, arg2);
+        },
+        __wbg_moveTo_a5882cdf1a7d39d9: function(arg0, arg1, arg2) {
+            arg0.moveTo(arg1, arg2);
         },
         __wbg_msCrypto_bd5a034af96bcba6: function(arg0) {
             const ret = arg0.msCrypto;
@@ -78,6 +117,9 @@ function __wbg_get_imports() {
         __wbg_set_fillStyle_52e75a25be60a3ff: function(arg0, arg1, arg2) {
             arg0.fillStyle = getStringFromWasm0(arg1, arg2);
         },
+        __wbg_set_strokeStyle_cce50c69cecc2df7: function(arg0, arg1, arg2) {
+            arg0.strokeStyle = getStringFromWasm0(arg1, arg2);
+        },
         __wbg_static_accessor_GLOBAL_THIS_466428f93b4eaa76: function() {
             const ret = typeof globalThis === 'undefined' ? null : globalThis;
             return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
@@ -93,6 +135,9 @@ function __wbg_get_imports() {
         __wbg_static_accessor_WINDOW_e0db14a0eba6a812: function() {
             const ret = typeof window === 'undefined' ? null : window;
             return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        },
+        __wbg_stroke_5f311844f0db0d9a: function(arg0) {
+            arg0.stroke();
         },
         __wbg_subarray_a4cc58201c7359fd: function(arg0, arg1, arg2) {
             const ret = arg0.subarray(arg1 >>> 0, arg2 >>> 0);
@@ -127,6 +172,10 @@ function __wbg_get_imports() {
         "./rusty_drizzle_bg.js": import0,
     };
 }
+
+const RainFinalization = (typeof FinalizationRegistry === 'undefined')
+    ? { register: () => {}, unregister: () => {} }
+    : new FinalizationRegistry(ptr => wasm.__wbg_rain_free(ptr, 1));
 
 function addToExternrefTable0(obj) {
     const idx = wasm.__externref_table_alloc();
