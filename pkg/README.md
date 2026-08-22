@@ -1,6 +1,6 @@
 # rusty-drizzle
 
-A basic 2D plain generator using rust
+A basic 2D rain generator using rust
 
 #### AI Disclosure
 
@@ -9,6 +9,8 @@ This project was mostly human written, but AI was also involved for the followin
 - debugging compile errors (e.g., `image`/`getrandom` wasm issues)
 
 - initial project scaffolding (Cargo, wasm-pack setup)
+
+- adding the gif feature into the CLI part
 
 All final commits and decisions were made by a human.
 
@@ -61,5 +63,13 @@ If you want to build the newest code from source:
 This could be an image of v0.1.0
 
 
-![Eyample image v1](random_pattern.png)
+![Example image v0.0.1](random_pattern.png)
+
+
+
+
+This could be a gif of v1.0.0
+
+
+![Example GIF v1.0.0](rain.gif)
 

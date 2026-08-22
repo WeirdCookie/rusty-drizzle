@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Rusty-Drizzle</title>
@@ -7,8 +7,17 @@
 </head>
 
 <body>
-    <h1> Rusty drizzle </h1>
+    <h1>Rusty drizzle</h1>
+
     <canvas id="noise-canvas" width="640" height="480"></canvas>
+
+    <div class="controls">
+        <label>Size <input type="range" id="size" min="2" max="40" step="1" value="12"> <output id="size-val">12</output></label>
+        <label>Speed <input type="range" id="speed" min="50" max="800" step="10" value="300"> <output id="speed-val">300</output></label>
+        <label>Count <input type="range" id="count" min="20" max="800" step="10" value="300"> <output id="count-val">300</output></label>
+        <label>Angle <input type="range" id="angle" min="-80" max="80" step="1" value="15"> <output id="angle-val">15°</output></label>
+        <label>Width <input type="range" id="width" min="1" max="8" step="1" value="2"> <output id="width-val">2</output></label>
+    </div>
 
     <script src="script.js" type="module"></script>
 

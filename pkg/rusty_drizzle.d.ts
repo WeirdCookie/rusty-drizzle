@@ -5,7 +5,12 @@ export class Rain {
     free(): void;
     [Symbol.dispose](): void;
     draw(ctx: CanvasRenderingContext2D, w: number, h: number): void;
-    constructor(count: number);
+    constructor(count: number, w: number, h: number);
+    set_angle_deg(v: number): void;
+    set_count(v: number, w: number, _h: number): void;
+    set_size(v: number): void;
+    set_speed(v: number): void;
+    set_width(v: number): void;
     step(dt: number, w: number, h: number): void;
 }
 
@@ -15,7 +20,12 @@ export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_rain_free: (a: number, b: number) => void;
     readonly rain_draw: (a: number, b: any, c: number, d: number) => void;
-    readonly rain_new: (a: number) => number;
+    readonly rain_new: (a: number, b: number, c: number) => number;
+    readonly rain_set_angle_deg: (a: number, b: number) => void;
+    readonly rain_set_count: (a: number, b: number, c: number, d: number) => void;
+    readonly rain_set_size: (a: number, b: number) => void;
+    readonly rain_set_speed: (a: number, b: number) => void;
+    readonly rain_set_width: (a: number, b: number) => void;
     readonly rain_step: (a: number, b: number, c: number, d: number) => void;
     readonly __wbindgen_exn_store: (a: number) => void;
     readonly __externref_table_alloc: () => number;

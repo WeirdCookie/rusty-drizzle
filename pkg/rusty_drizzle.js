@@ -21,12 +21,46 @@ export class Rain {
     }
     /**
      * @param {number} count
+     * @param {number} w
+     * @param {number} h
      */
-    constructor(count) {
-        const ret = wasm.rain_new(count);
+    constructor(count, w, h) {
+        const ret = wasm.rain_new(count, w, h);
         this.__wbg_ptr = ret;
         RainFinalization.register(this, this.__wbg_ptr, this);
         return this;
+    }
+    /**
+     * @param {number} v
+     */
+    set_angle_deg(v) {
+        wasm.rain_set_angle_deg(this.__wbg_ptr, v);
+    }
+    /**
+     * @param {number} v
+     * @param {number} w
+     * @param {number} _h
+     */
+    set_count(v, w, _h) {
+        wasm.rain_set_count(this.__wbg_ptr, v, w, _h);
+    }
+    /**
+     * @param {number} v
+     */
+    set_size(v) {
+        wasm.rain_set_size(this.__wbg_ptr, v);
+    }
+    /**
+     * @param {number} v
+     */
+    set_speed(v) {
+        wasm.rain_set_speed(this.__wbg_ptr, v);
+    }
+    /**
+     * @param {number} v
+     */
+    set_width(v) {
+        wasm.rain_set_width(this.__wbg_ptr, v);
     }
     /**
      * @param {number} dt
@@ -116,6 +150,9 @@ function __wbg_get_imports() {
         }, arguments); },
         __wbg_set_fillStyle_52e75a25be60a3ff: function(arg0, arg1, arg2) {
             arg0.fillStyle = getStringFromWasm0(arg1, arg2);
+        },
+        __wbg_set_lineWidth_5f9aefcc32e60287: function(arg0, arg1) {
+            arg0.lineWidth = arg1;
         },
         __wbg_set_strokeStyle_cce50c69cecc2df7: function(arg0, arg1, arg2) {
             arg0.strokeStyle = getStringFromWasm0(arg1, arg2);
