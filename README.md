@@ -33,32 +33,35 @@ https://rusty-drizzle.weirdcookie.workers.dev/
 
 
 
-If you are on windows go to releases and download the latest .exe
+#### On Windows
 
+Go to the [releases](https://github.com/WeirdCookie/rusty-drizzle/releases) page and download the latest `.exe`, then double-click it (or run it from a terminal).
 
-If you are on GNU/Linux paste this command into your terminal emulator to download:
+#### On GNU/Linux
 
-```bash
-curl -L -o rusty-drizzle https://github.com/WeirdCookie/rusty-drizzle/releases/download/pre-release/rusty-drizzle && chmod +x rusty-drizzle
-```
-
-To start the programm:
+There is no pre-built Linux binary yet, so you build it from source. You only need Rust installed (see [requirements](#requirements)).
 
 ```bash
-./rusty-drizzle
+git clone https://github.com/WeirdCookie/rusty-drizzle.git && cd rusty-drizzle && cargo build --release
 ```
 
-If you want to build the newest code from source:
+Then run it:
 
-1. make sure you have all [requirements](#requirements) installed
+```bash
+./target/release/rusty-drizzle
+```
 
-2. ```bash
-    git clone https://github.com/WeirdCookie/rusty-drizzle.git && cd rusty-drizzle && cargo build --release
-    ```
+Run with `--help` to see all options:
 
-3. ```bash
-    ./target/release/rusty-drizzle --help
-    ```
+```bash
+./target/release/rusty-drizzle --help
+```
+
+Rendering a 10 second GIF with custom parameters:
+
+```bash
+./target/release/rusty-drizzle --size 20 --speed 500 --count 400 --angle 30 --width 3
+```
 
 ## Examples
 
