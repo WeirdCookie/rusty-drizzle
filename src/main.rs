@@ -92,6 +92,7 @@ fn user_input() -> Result<Params, Box<dyn std::error::Error>> {
     p.speed = read_number("Fall speed in px/s", p.speed)?;
     p.count = read_number("Number of drops", p.count)?;
     p.angle_deg = read_number("Fall angle in degrees", p.angle_deg)?;
+    p.width = read_number("Drop thickness in px", p.width)?;
     Ok(p)
 }
 
