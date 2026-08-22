@@ -5,9 +5,12 @@ mod sim;
 use image::codecs::gif::{GifEncoder, Repeat};
 use image::{Delay, Frame, Rgba, RgbaImage};
 use std::fs::File;
-use std::io::BufWriter;
+use std::io::{self, BufWriter, Write};
+use std::str::FromStr;
 
 struct Params {
+    pic_width: u32,
+    pic_height: u32,
     size: f64,
     speed: f64,
     count: usize,
@@ -18,6 +21,8 @@ struct Params {
 impl Default for Params {
     fn default() -> Self {
         Params {
+            pic_width: 400,
+            pic_height: 300,
             size: 12.0,
             speed: 300.0,
             count: 200,
@@ -26,6 +31,44 @@ impl Default for Params {
         }
     }
 }
+
+// reads a number from the terminal; pressing Enter keeps the default
+fn read_number<T: FromStr + std::fmt::Display>(
+    prompt: &str,
+    default: T,
+) -> Result<T, Box<dyn std::error::Error>>
+where
+    T::Err: std::fmt::Display,
+{
+    loop {
+        print!("{} (default {}): ", prompt, default);
+        io::stdout().flush()?;
+        let mut line = String::new();
+        io::stdin().read_line(&mut line)?;
+        let t = line.trim();
+        if t.is_empty() {
+            return Ok(default);
+        }
+        match t.parse::<T>() {
+            Ok(v) => return Ok(v),
+            Err(e) => println!("Invalid number ({}). Try again.", e),
+        }
+    }
+}
+
+// interactive mode: asks for every parameter and uses the answers
+fn user_input() -> Result<Params, Box<dyn std::error::Error>> {
+    let mut p = Params::default();
+    p.pic_width = read_number("Picture width in px", p.pic_width)?;
+    p.pic_height = read_number("Picture height in px", p.pic_height)?;
+    p.size = read_number("Drop size in px", p.size)?;
+    p.speed = read_number("Fall speed in px/s", p.speed)?;
+    p.count = read_number("Number of drops", p.count)?;
+    p.angle_deg = read_number("Fall angle in degrees", p.angle_deg)?;
+    Ok(p)
+}
+
+
 
 fn print_help() {
     println!("rusty-drizzle - renders 10 seconds of rain as rain.gif");
@@ -37,6 +80,8 @@ fn print_help() {
     println!("  --angle <f64>   fall angle in degrees from vertical, default 15");
     println!("  --width <f64>   drop width (stroke thickness in px), default 2");
     println!("  --help          show this help");
+    println!();
+    println!("Run with no arguments to set the parameters interactively.");
     println!();
     println!("Example:");
     println!("  rusty-drizzle --size 20 --speed 500 --count 400 --angle 30 --width 3");
@@ -50,27 +95,33 @@ fn value_at(args: &[String], i: &mut usize) -> Result<String, String> {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut p = Params::default();
     let args: Vec<String> = std::env::args().skip(1).collect();
-    let mut i = 0;
-    while i < args.len() {
-        match args[i].as_str() {
-            "--help" | "-h" => {
-                print_help();
-                return Ok(());
+
+    let mut p = Params::default();
+    if args.is_empty() {
+        // no command-line arguments -> interactive mode
+        p = user_input()?;
+    } else {
+        let mut i = 0;
+        while i < args.len() {
+            match args[i].as_str() {
+                "--help" | "-h" => {
+                    print_help();
+                    return Ok(());
+                }
+                "--size" => p.size = value_at(&args, &mut i)?.parse()?,
+                "--speed" => p.speed = value_at(&args, &mut i)?.parse()?,
+                "--count" => p.count = value_at(&args, &mut i)?.parse()?,
+                "--angle" => p.angle_deg = value_at(&args, &mut i)?.parse()?,
+                "--width" => p.width = value_at(&args, &mut i)?.parse()?,
+                other => return Err(format!("unknown option: {}", other).into()),
             }
-            "--size" => p.size = value_at(&args, &mut i)?.parse()?,
-            "--speed" => p.speed = value_at(&args, &mut i)?.parse()?,
-            "--count" => p.count = value_at(&args, &mut i)?.parse()?,
-            "--angle" => p.angle_deg = value_at(&args, &mut i)?.parse()?,
-            "--width" => p.width = value_at(&args, &mut i)?.parse()?,
-            other => return Err(format!("unknown option: {}", other).into()),
+            i += 1;
         }
-        i += 1;
     }
 
-    let width = 400;
-    let height = 300;
+    let width = p.pic_width;
+    let height = p.pic_height;
     let fps = 25;
     let seconds = 10;
 

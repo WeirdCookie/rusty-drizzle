@@ -12,6 +12,8 @@ This project was mostly human written, but AI was also involved for the followin
 
 - adding the gif feature into the CLI part
 
+- implementing the adjustable rain parameters (size, speed, count, angle, width) in the web UI and CLI
+
 All final commits and decisions were made by a human.
 
 The core logic and design decisions were reviewed and verified by the author
